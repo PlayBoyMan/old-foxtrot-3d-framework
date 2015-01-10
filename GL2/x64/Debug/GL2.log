@@ -1,0 +1,23 @@
+﻿Build started 10/01/2015 00:06:14.
+     1>Project "C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\GL2\GL2.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Files\lib\glfw-3.0.4.bin.WIN64\include" /IC:\Files\include /Zi /nologo /W3 /WX- /sdl /Ox /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt main.cpp
+         main.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\x64\Debug\GL2.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Files\lib\assimp\lib /LIBPATH:"C:\Files\lib\glew-1.11.0\lib\Release\x64" /LIBPATH:"C:\Files\lib\glfw-3.0.4.bin.WIN64\lib-msvc120" glew32.lib opengl32.lib glfw3.lib assimp.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\x64\Debug\GL2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\x64\Debug\GL2.lib" /MACHINE:X64 /PROFILE x64\Debug\Matrix.obj
+         x64\Debug\Quaternion.obj
+         x64\Debug\Transform.obj
+         x64\Debug\Vector.obj
+         x64\Debug\main.obj
+         x64\Debug\shaders.obj
+         x64\Debug\Mesh.obj
+         x64\Debug\Model.obj
+         x64\Debug\stdafx.obj
+     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/PROFILE' specification
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+         GL2.vcxproj -> C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\x64\Debug\GL2.exe
+     1>Done Building Project "C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\GL2\GL2.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.73
