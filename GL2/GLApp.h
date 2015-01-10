@@ -5,6 +5,7 @@
 #include "framework/Math/vector.h"
 #include "framework\Graphics\Mesh.h"
 #include "framework\Graphics\Model.h"
+#include "Temp\LookAtCamera.h"
 
 #include <string>
 #include <math.h>
@@ -31,6 +32,9 @@ private:
 	float angle = 0.0f;
 
 	graphics::Model model;
+
+	LookAtCamera camera;
+
 
 	static void resize(GLFWwindow *window, int w, int h)
 	{
@@ -62,7 +66,7 @@ private:
 
 		camera_pos = vec::Vec3(0.0f, 0.0f, 10.0f);
 
-		model.load_model("Resources\\Models\\nanosuit\\nanosuit.obj");
+		model.load_model("Resources\\Models\\van.obj");
 		
 		
 		
@@ -74,42 +78,53 @@ private:
 		glDepthMask(GL_TRUE);
 		glDepthFunc(GL_LEQUAL);
 		glDepthRange(0.0f, 1.0f);
+
+		camera.set_camera(Vec3(0.0, 10.0, 10.0f), Vec3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
 		
 	}
 	
 	void render()
 	{
 
-		if (glfwGetKey(window, GLFW_KEY_UP) == GL_TRUE)
-		{
-			camera_pos.z -= 0.005f;
+		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		{			
+			camera.rotate_up(0.005f);
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_DOWN) == GL_TRUE)
+		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		{
-			camera_pos.z += 0.005f;			
+			camera.rotate_up(-0.005f);
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GL_TRUE)
+		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		{
-			camera_pos.x += 0.005f;
+			camera.rotate_side(0.005f);
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_LEFT) == GL_TRUE)
+		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		{
-			camera_pos.x -= 0.005f;
+			camera.rotate_side(-0.005f);
 		}
 
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		{
+			camera.walk(0.005f);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		{
+			camera.walk(-0.005f);
+		}
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		point_pos = camera_pos + vec::Vec3(0.0f, 0.0f, -1.0f);
 		
-
-		mat::Mat4 object_matrix = mat::Mat4(transform::rotation_matrix_x_axis(angle), vec::Vec3(0.0f));
-
-		transform_matrix = transform::frustum_matrix(1.0f, 100.0f, 1.0f, -1.0f, 0.7f, -0.7f)*transform::look_at_matrix(camera_pos, point_pos, vec::Vec3(0.0f, 1.0f, 0.0f));
 		
+
+		//transform_matrix = transform::frustum_matrix(1.0f, 100.0f, 1.0f, -1.0f, 0.7f, -0.7f)*transform::look_at_matrix(camera_pos, point_pos, vec::Vec3(0.0f, 1.0f, 0.0f));
+		
+		transform_matrix = transform::frustum_matrix(1.0f, 100.0f, 1.0f, -1.0f, 0.7f, -0.7f) * camera.view_matrix;
 
 		int transformPos = glGetUniformLocation(shaderProgram.getProgram(), "transform_matrix");
 		glUniformMatrix4fv(transformPos, 1, GL_TRUE, &transform_matrix.data[0][0]);

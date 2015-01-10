@@ -164,3 +164,4 @@ mat::Mat4 T::transform_matrix(const mat::Mat3 &mat, const vec::Vec3 &vec)
 {
 	return mat::Mat4(mat, vec);
 }
+

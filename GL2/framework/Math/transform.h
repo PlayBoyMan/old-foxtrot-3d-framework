@@ -70,7 +70,7 @@ namespace framework {
 
 		/// Returns a general 4d transformation matrix
 		mat::Mat4 transform_matrix(const mat::Mat3 &mat, const vec::Vec3 &vec);
-
+		
 	}
 }
 

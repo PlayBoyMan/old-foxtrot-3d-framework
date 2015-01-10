@@ -273,6 +273,7 @@ namespace framework {
 			return temp;
 		}
 
+
 		/// Matrix scalar multiplication (right).
 		template <int n, int m>
 		Matrix<n, m> operator*(const Matrix<n, m> &right, const float value)
@@ -282,6 +283,19 @@ namespace framework {
 			for (int i = 0; i < n; i++)
 				for (int j = 0; j < m; j++)
 					temp[i][j] = value * right[i][j];
+			return temp;
+		}
+
+		/// Matrix scalar multiplication (left).
+		template <int n, int m>
+		vec::Vector<m> operator*(const Matrix<n,m> &mat, const Vector<m> &vec)
+		{
+			vec::Vector<n> temp(0.0f);
+
+			for (int i = 0; i < n; i++)
+				for (int j = 0; j < m; j++)
+					temp.data[i] += mat.data[i][j] * vec.data[j];
+
 			return temp;
 		}
 
