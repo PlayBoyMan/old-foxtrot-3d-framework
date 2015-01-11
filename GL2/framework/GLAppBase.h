@@ -27,10 +27,10 @@ public:
 	GLFWwindow *window;
 
 	/// Window width
-	int imageWidth = 800;
+	int imageWidth;
 
 	/// Window height
-	int imageHeight = 600;
+	int imageHeight;
 
 	/// Window name
 	string windowTitle = "GLFW Window";
@@ -136,23 +136,21 @@ public:
 	}
 
 	/// Default constructor, empty.
-	GLAppBase() 
+	GLAppBase() : windowTitle("My Window"), imageWidth(1280), imageHeight(720)
 	{	
 	}
 
 	/// Construct window with given dimensions.
-	GLAppBase(int w, int h)
+	GLAppBase(int w, int h) : windowTitle("My Window"), imageWidth(w), imageHeight(h)
 	{
 		imageWidth = w;
 		imageHeight = h;		
 	}
 
 	/// Construct window with dimensions and name.
-	GLAppBase(const string &str, int w, int h)
+	GLAppBase(const string &str, int w, int h) :
+		windowTitle(str), imageWidth(w), imageHeight(h)
 	{
-		windowTitle = str;
-		imageWidth = w;
-		imageHeight = h;
 	}
 
 	

@@ -157,6 +157,7 @@
     <ClInclude Include="framework\Math\quaternion.h" />
     <ClInclude Include="framework\Math\transform.h" />
     <ClInclude Include="framework\Math\vector.h" />
+    <ClInclude Include="Temp\Frustum.h" />
     <ClInclude Include="GLApp.h" />
     <ClInclude Include="framework\GLAppBase.h" />
     <ClInclude Include="framework\Graphics\Shaders.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="framework\Math\Quaternion.cpp" />
     <ClCompile Include="framework\Math\Transform.cpp" />
     <ClCompile Include="framework\Math\Vector.cpp" />
+    <ClCompile Include="Temp\Frustum.cpp" />
     <ClCompile Include="Temp\LookAtCamera.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="framework\Graphics\shaders.cpp" />

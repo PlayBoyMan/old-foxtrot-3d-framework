@@ -34,11 +34,23 @@ private:
 	graphics::Model model;
 
 	LookAtCamera camera;
+	Frustum myFrustum;
 
 
 	static void resize(GLFWwindow *window, int w, int h)
 	{
-		glViewport(0, 0, w, h);		
+		if (h > 0.562*w)
+		{
+			int height = floor(0.562 * w);
+			
+			glViewport(0, (h - height)/2, w, 0.562*w);
+		}
+		else
+		{
+			int width = floor (h / (0.562));
+			glViewport((w - width) / 2, 0, width, h);
+
+		}
 	}
 
 	void init() 
@@ -66,7 +78,7 @@ private:
 
 		camera_pos = vec::Vec3(0.0f, 0.0f, 10.0f);
 
-		model.load_model("Resources\\Models\\van.obj");
+		model.load_model("Resources\\Models\\nanosuit\\nanosuit.obj");
 		
 		
 		
@@ -79,8 +91,11 @@ private:
 		glDepthFunc(GL_LEQUAL);
 		glDepthRange(0.0f, 1.0f);
 
-		camera.set_camera(Vec3(0.0, 10.0, 10.0f), Vec3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-		
+		camera.set_camera(Vec3(0.0, 10.0, 10.0f), Vec3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));	
+		myFrustum = Frustum(1.0f, 1000.0f, 0.5f, -0.5f, 0.28f, -0.28f);
+		camera.set_frustum(myFrustum);
+
+
 	}
 	
 	void render()
@@ -116,6 +131,22 @@ private:
 			camera.walk(-0.005f);
 		}
 
+		if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+		{
+			camera.frustum->zoom(0.001f);
+			camera.update();
+			
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+		{
+			camera.frustum->zoom(-0.001f);
+			camera.update();
+
+		}
+
+		
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		point_pos = camera_pos + vec::Vec3(0.0f, 0.0f, -1.0f);
@@ -124,7 +155,9 @@ private:
 
 		//transform_matrix = transform::frustum_matrix(1.0f, 100.0f, 1.0f, -1.0f, 0.7f, -0.7f)*transform::look_at_matrix(camera_pos, point_pos, vec::Vec3(0.0f, 1.0f, 0.0f));
 		
-		transform_matrix = transform::frustum_matrix(1.0f, 100.0f, 1.0f, -1.0f, 0.7f, -0.7f) * camera.view_matrix;
+		//transform_matrix = transform::frustum_matrix(1.0f, 1000.0f, 0.5f, -0.5f, 0.28, -0.28f) * camera.camera_matrix;
+
+		transform_matrix = camera.view_matrix;
 
 		int transformPos = glGetUniformLocation(shaderProgram.getProgram(), "transform_matrix");
 		glUniformMatrix4fv(transformPos, 1, GL_TRUE, &transform_matrix.data[0][0]);
@@ -143,6 +176,6 @@ public:
 
 	GLApp()  { }
 	~GLApp() { }
-	GLApp(const string &str, int w, int h) { }
+	GLApp(const string &str, int w, int h) : GLAppBase(str, w, h) { }
 };
 
