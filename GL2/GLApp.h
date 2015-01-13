@@ -6,6 +6,7 @@
 #include "framework\Graphics\Mesh.h"
 #include "framework\Graphics\Model.h"
 #include "Temp\LookAtCamera.h"
+#include "Temp\FreeCamera.h"
 
 #include <string>
 #include <math.h>
@@ -34,6 +35,9 @@ private:
 	graphics::Model model;
 
 	LookAtCamera camera;
+
+	FreeCamera free_camera;
+	
 	Frustum myFrustum;
 
 
@@ -95,6 +99,9 @@ private:
 		myFrustum = Frustum(1.0f, 1000.0f, 0.5f, -0.5f, 0.28f, -0.28f);
 		camera.set_frustum(myFrustum);
 
+		free_camera = FreeCamera(Vec3(0.0, 10.0, 10.0f), Vec3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
+
+
 
 	}
 	
@@ -104,31 +111,37 @@ private:
 		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		{			
 			camera.rotate_up(0.005f);
+			free_camera.walk_foward(0.05f);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		{
 			camera.rotate_up(-0.005f);
+			free_camera.walk_foward(-0.05f);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		{
 			camera.rotate_side(0.005f);
+			free_camera.walk_side(0.05f);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		{
 			camera.rotate_side(-0.005f);
+			free_camera.walk_side(-0.05f);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			camera.walk(0.005f);
+			free_camera.tilt(0.005f);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
 			camera.walk(-0.005f);
+			free_camera.tilt(-0.005f);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
@@ -145,6 +158,16 @@ private:
 
 		}
 
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		{
+			free_camera.pan(0.005f);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		{
+			free_camera.pan(-0.005f);
+		}
+
 		
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -157,7 +180,7 @@ private:
 		
 		//transform_matrix = transform::frustum_matrix(1.0f, 1000.0f, 0.5f, -0.5f, 0.28, -0.28f) * camera.camera_matrix;
 
-		transform_matrix = camera.view_matrix;
+		transform_matrix = free_camera.view_matrix;
 
 		int transformPos = glGetUniformLocation(shaderProgram.getProgram(), "transform_matrix");
 		glUniformMatrix4fv(transformPos, 1, GL_TRUE, &transform_matrix.data[0][0]);

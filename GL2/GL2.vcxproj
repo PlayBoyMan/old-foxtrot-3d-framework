@@ -98,7 +98,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Full</Optimization>
+      <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\Files\lib\glfw-3.0.4.bin.WIN64\include;C:\Files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -157,6 +157,7 @@
     <ClInclude Include="framework\Math\quaternion.h" />
     <ClInclude Include="framework\Math\transform.h" />
     <ClInclude Include="framework\Math\vector.h" />
+    <ClInclude Include="Temp\FreeCamera.h" />
     <ClInclude Include="Temp\Frustum.h" />
     <ClInclude Include="GLApp.h" />
     <ClInclude Include="framework\GLAppBase.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="framework\Math\Quaternion.cpp" />
     <ClCompile Include="framework\Math\Transform.cpp" />
     <ClCompile Include="framework\Math\Vector.cpp" />
+    <ClCompile Include="Temp\FreeCamera.cpp" />
     <ClCompile Include="Temp\Frustum.cpp" />
     <ClCompile Include="Temp\LookAtCamera.cpp" />
     <ClCompile Include="main.cpp" />
