@@ -10,5 +10,10 @@
 #include "Graphics\Model.h"
 #include "Graphics\Shaders.h"
 
+namespace framework {
+
+	const float pi = 3.14159265359;
+
+}
 
 #endif

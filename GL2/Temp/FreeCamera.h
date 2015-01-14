@@ -10,46 +10,34 @@ using namespace framework;
 class FreeCamera
 {
 public:
+	
 
-	mat::Mat4 view_matrix;
 	mat::Mat4 camera_matrix;
-
-	struct Oritentation {
-
-		vec::Vec3 z;
-		vec::Vec3 x;
-		vec::Vec3 y;
-
-		vec::Vec3 position;
-	};
+	mat::Mat4 view_matrix;
 
 	Frustum *frustum;
-	
-	Frustum self_frustum;
+
+	float yaw, pitch, roll;
+
+	vec::Vec3 position;
+	vec::Vec3 direction;
+	vec::Vec3 up;
+
+	vec::Vec3 current_direction;
+	vec::Vec3 current_up;
 
 	FreeCamera();
 
 	~FreeCamera();
 
-	FreeCamera(const vec::Vec3 &camera_pos, const vec::Vec3 &direction, const vec::Vec3 &up, Frustum &f);
-
-	FreeCamera(Frustum &f);
-
-	void set(const vec::Vec3 &camera_pos, const vec::Vec3 &direction, const vec::Vec3 &up);
-
-	void set_frustum(Frustum &f);
-
+	FreeCamera(vec::Vec3 camera_position, vec::Vec3 camera_direction, vec::Vec3 camera_up, Frustum &f);
 	void update();
-
-	void walk(vec::Vec3 direction, float distance);
-
-	void walk_side(float distance);
-
-	void walk_foward(float distance);
-
-	void pan(float angle);
-
-	void tilt(float angle);
+	void yaw_pitch_roll();
+	void pan(float delta);
+	void tilt(float delta);
+	void do_roll(float delta);
+	void walk_foward(float step);
+	void walk_side(float step);
 };
 
 

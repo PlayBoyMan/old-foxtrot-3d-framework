@@ -77,7 +77,7 @@ public:
 		}
 
 		glfwMakeContextCurrent(window);		
-		glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+		glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_FALSE);
 
 		glewExperimental = true;
 

@@ -3,6 +3,8 @@
 
 #include <GL\glew.h>
 
+#include <string.h>
+
 #pragma once
 
 namespace framework {
@@ -117,7 +119,7 @@ namespace framework {
 				};
 			};
 
-			/// Default constructor, empy
+			/// Default constructor, empty
 			Vector() { }
 
 			Vector(float a, float b, float c)
@@ -144,10 +146,12 @@ namespace framework {
 			}
 
 			/// Subscript operator
-			float operator[](const int i)
+			float& operator[](const int i)
 			{
 				return data[i];
 			}
+			
+			
 		};
 
 		/// Class specialization for 4D vectors

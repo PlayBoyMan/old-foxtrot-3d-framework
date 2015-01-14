@@ -4,85 +4,90 @@
 
 using namespace framework;
 
-FreeCamera::FreeCamera()
+FreeCamera::FreeCamera(vec::Vec3 camera_position, vec::Vec3 camera_direction, vec::Vec3 camera_up, Frustum &f)
 {
-}
+	frustum = &f;
 
+	position = camera_position;
+	direction = camera_direction;
+	up = camera_up;
 
-FreeCamera::~FreeCamera()
-{
-}
+	current_direction = direction;
+	current_up = up;
 
+	yaw = 0.0f;
+	pitch = 0.0f;
+	roll = 0.0f;
 
-FreeCamera::FreeCamera(const vec::Vec3 &camera_pos, const vec::Vec3 &direction, const vec::Vec3 &up, Frustum &f) 	
-{
-	set_frustum(f);
-	set(camera_pos, direction, up);
-}
+	camera_matrix = transform::look_at_matrix(position, direction + position, up);
 
-void FreeCamera::set(const vec::Vec3 &camera_pos, const vec::Vec3 &direction, const vec::Vec3 &up)
-{
-	camera_matrix = transform::look_at_matrix(camera_pos, direction, up);
 	update();
 }
 
-FreeCamera::FreeCamera(Frustum &f)
-	: FreeCamera(vec::Vec3(0.0f), vec::Vec3(0.0f, 0.0f, -1.0f), vec::Vec3(0.0f, 1.0f, 0.0f), f)
+FreeCamera::FreeCamera()
 {
+
+}
+
+FreeCamera::~FreeCamera()
+{
+
+}
+
+void FreeCamera::tilt(float delta)
+{
+	pitch = pitch + delta;
+
+	yaw_pitch_roll();
+}
+
+void FreeCamera::pan(float delta)
+{
+	yaw = yaw - delta;	
+
+	yaw_pitch_roll();
+}
+
+void FreeCamera::do_roll(float delta)
+{
+	roll = roll + delta;
+	yaw_pitch_roll();
+}
+
+void FreeCamera::walk_foward(float step)
+{
+	vec::Vec3 new_position = position + step*current_direction;
+
+	position = new_position;
+	
+	yaw_pitch_roll();
+}
+
+void FreeCamera::walk_side(float step)
+{
+	vec::Vec3 side(camera_matrix(0,0), camera_matrix(0, 1), camera_matrix(0, 2));
+
+	position = position + step*side;
+
+	yaw_pitch_roll();
+}
+
+void FreeCamera::yaw_pitch_roll()
+{	
+
+	mat::Mat3 rotation_matrix = transform::rotation_matrix_z_axis(roll) * transform::rotation_matrix_y_axis(yaw) * transform::rotation_matrix_x_axis(pitch);
+	
+	current_direction = rotation_matrix * direction;		
+	current_up = rotation_matrix * up;	
+
+	camera_matrix = transform::look_at_matrix(position, current_direction + position, current_up);
+
+	update();
 
 }
 
 void FreeCamera::update()
 {
 	view_matrix = frustum->frustum_matrix * camera_matrix;
-}
-
-void FreeCamera::set_frustum(Frustum &f)
-{
-	frustum = &f;
-}
-
-void FreeCamera::walk(vec::Vec3 direction, float distance)
-{
-	mat::Mat4 translation = transform::translation_matrix_4d(-1.0f*distance*direction);
-
-	camera_matrix = translation * camera_matrix;
-
-	update();
-}
-
-void FreeCamera::walk_side(float distance)
-{
-	walk(vec::Vec3(1.0f, 0.0f, 0.0f), distance);
-}
-
-void FreeCamera::walk_foward(float distance)
-{
-	walk(vec::Vec3(0.0f, 0.0f, -1.0f), distance);
-}
-
-void FreeCamera::tilt(float angle)
-{
-
-	mat::Mat3 rot = transform::rotation_matrix_x_axis(angle);
-	vec::Vec3 point = rot*vec::Vec3(0.0f, 0.0f, -1.0f);
-	vec::Vec3 new_up = rot*vec::Vec3(0.0f, 1.0f, 0.0f);
-	mat::Mat4 transform = transform::look_at_matrix(vec::Vec3(0.0f, 0.0f, 0.0f), point, new_up);
-
-	camera_matrix = transform * camera_matrix;
-	
-	update();
-}
-
-
-void FreeCamera::pan(float angle)
-{
-	vec::Vec3 point = transform::rotation_matrix_y_axis(-1.0f*angle)*vec::Vec3(0.0f, 0.0f, -1.0f);
-	
-	mat::Mat4 transform = transform::look_at_matrix(vec::Vec3(0.0f, 0.0f, 0.0f), point, vec::Vec3(0.0f, 1.0f, 0.0f));
-
-	camera_matrix = transform * camera_matrix;
-
-	update();
 }
 

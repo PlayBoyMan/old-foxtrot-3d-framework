@@ -40,6 +40,8 @@ private:
 	
 	Frustum myFrustum;
 
+	float time = 0.0f;
+
 
 	static void resize(GLFWwindow *window, int w, int h)
 	{
@@ -99,7 +101,7 @@ private:
 		myFrustum = Frustum(1.0f, 1000.0f, 0.5f, -0.5f, 0.28f, -0.28f);
 		camera.set_frustum(myFrustum);
 
-		free_camera = FreeCamera(Vec3(0.0, 10.0, 10.0f), Vec3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
+		free_camera = FreeCamera(Vec3(0.0, 10.0, 20.0f), Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
 
 
 
@@ -108,40 +110,47 @@ private:
 	void render()
 	{
 
+		float new_time = (float)glfwGetTime();
+		float delta = new_time - time;
+		time = new_time;
+
+		const float rotation_speed = 0.8f;
+		const float walk_speed = 5.0f;
+
 		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		{			
 			camera.rotate_up(0.005f);
-			free_camera.walk_foward(0.05f);
+			free_camera.walk_foward(walk_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		{
 			camera.rotate_up(-0.005f);
-			free_camera.walk_foward(-0.05f);
+			free_camera.walk_foward(-walk_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		{
 			camera.rotate_side(0.005f);
-			free_camera.walk_side(0.05f);
+			free_camera.walk_side(walk_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		{
 			camera.rotate_side(-0.005f);
-			free_camera.walk_side(-0.05f);
+			free_camera.walk_side(-walk_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
-			camera.walk(0.005f);
-			free_camera.tilt(0.005f);
+			camera.walk(walk_speed * delta);
+			free_camera.tilt(rotation_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
 			camera.walk(-0.005f);
-			free_camera.tilt(-0.005f);
+			free_camera.tilt(-rotation_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
@@ -160,12 +169,12 @@ private:
 
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
-			free_camera.pan(0.005f);
+			free_camera.pan(rotation_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
-			free_camera.pan(-0.005f);
+			free_camera.pan(-rotation_speed * delta);
 		}
 
 		

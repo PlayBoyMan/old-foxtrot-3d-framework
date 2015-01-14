@@ -223,7 +223,19 @@ namespace framework {
 			}
 
 			/// Subscript operator
-			float *operator[](const int i) { return data[i]; }
+			float* operator[](const int i) { return data[i]; }
+
+			float& operator()(int i, int j)
+			{
+				return data[i][j];
+			}
+
+			float operator()(int i, int j) const
+			{
+				return data[i][j];
+			}
+
+
 		};
 
 		/// 2x2 Matrix
