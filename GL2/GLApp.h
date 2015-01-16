@@ -120,13 +120,13 @@ private:
 		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		{			
 			camera.rotate_up(0.005f);
-			free_camera.walk_foward(walk_speed * delta);
+			free_camera.walk_forward(walk_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		{
 			camera.rotate_up(-0.005f);
-			free_camera.walk_foward(-walk_speed * delta);
+			free_camera.walk_forward(-walk_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
