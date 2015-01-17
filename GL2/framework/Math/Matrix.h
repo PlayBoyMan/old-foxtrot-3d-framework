@@ -281,7 +281,7 @@ namespace framework {
 
 			for (int i = 0; i < n; i++)
 				for (int j = 0; j < m; j++)
-					temp[i][j] = value * right[i][j];
+					temp.data[i][j] = value * right.data[i][j];
 			return temp;
 		}
 

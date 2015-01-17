@@ -97,9 +97,8 @@ private:
 		glDepthFunc(GL_LEQUAL);
 		glDepthRange(0.0f, 1.0f);
 
-		camera.set_camera(Vec3(0.0, 10.0, 10.0f), Vec3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));	
 		myFrustum = Frustum(1.0f, 1000.0f, 0.5f, -0.5f, 0.28f, -0.28f);
-		camera.set_frustum(myFrustum);
+		camera = LookAtCamera(Vec3(0.0, 10.0, 10.0f), Vec3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
 
 		free_camera = FreeCamera(Vec3(0.0, 10.0, 20.0f), Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
 
@@ -131,25 +130,25 @@ private:
 
 		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		{
-			camera.rotate_side(0.005f);
+			camera.rotate_side(rotation_speed * delta);
 			free_camera.walk_side(walk_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		{
-			camera.rotate_side(-0.005f);
+			camera.rotate_side(-rotation_speed * delta);
 			free_camera.walk_side(-walk_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
-			camera.walk(walk_speed * delta);
+			camera.walk(-walk_speed * delta);
 			free_camera.tilt(rotation_speed * delta);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
-			camera.walk(-0.005f);
+			camera.walk(walk_speed * delta);
 			free_camera.tilt(-rotation_speed * delta);
 		}
 
@@ -189,7 +188,9 @@ private:
 		
 		//transform_matrix = transform::frustum_matrix(1.0f, 1000.0f, 0.5f, -0.5f, 0.28, -0.28f) * camera.camera_matrix;
 
-		transform_matrix = free_camera.view_matrix;
+		//transform_matrix = free_camera.view_matrix;
+
+		transform_matrix = camera.view_matrix;
 
 		int transformPos = glGetUniformLocation(shaderProgram.getProgram(), "transform_matrix");
 		glUniformMatrix4fv(transformPos, 1, GL_TRUE, &transform_matrix.data[0][0]);

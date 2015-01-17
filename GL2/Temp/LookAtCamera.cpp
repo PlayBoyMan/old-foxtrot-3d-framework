@@ -4,88 +4,89 @@
 
 using namespace framework;
 
-void LookAtCamera::set_camera(const vec::Vec3 &camera_pos, const vec::Vec3 &point, const vec::Vec3 &up)
-{
-	camera_matrix = transform::look_at_matrix(camera_pos, point, up);
-	distance = vec::norm(camera_pos - point);
-}
 
-LookAtCamera::LookAtCamera() 
+LookAtCamera::LookAtCamera()
 {
 
 }
-
 
 LookAtCamera::~LookAtCamera()
 {
+
 }
 
-LookAtCamera::LookAtCamera(const vec::Vec3 &camera_pos, const vec::Vec3 &point, const vec::Vec3 &up)
-{
-	set_camera(camera_pos, point, up);
-}
 
 LookAtCamera::LookAtCamera(const vec::Vec3 &camera_pos, const vec::Vec3 &point, const vec::Vec3 &up, Frustum &f)
-	: LookAtCamera(camera_pos, point, up)
-{
-	set_frustum(f);
-}
-
-
-void LookAtCamera::rotate_up(float theta)
 {
 	
-	mat::Mat3 rot_matrix = transform::rotation_matrix_x_axis(theta);
+	// Calculate camera matrix
+	camera_matrix = transform::look_at_matrix(camera_pos, point, up);
 
-	vec::Vec3 point(0.0f, 0.0f, -distance);
-	vec::Vec3 new_camera_pos = rot_matrix * Vec3(0.0f, 0.0f, distance) + point;
-	vec::Vec3 new_up = rot_matrix * Vec3(0.0f, 1.0f, 0.0f);
+	// Store first camera matrix for later use
+	initial_camera_matrix = camera_matrix;
 
-	//camera_matrix = transform::look_at_matrix(new_camera_pos, point, new_up) * camera_matrix;
-	update(transform::look_at_matrix(new_camera_pos, point, new_up));
+	// Calculate the distance from the camera to the point
+	distance = vec::norm(camera_pos - point);
 
+	// Store the initial distance
+	initial_distance = distance;
+
+	// Rotation parameters
+	alpha = 0.0f;
+	beta = 0.0f;
+	gamma = 0.0f;
+
+	// Store the pointer to the frustum object
+	frustum = &f;
+
+	// Update the view matrix
+	update();
 }
 
-void LookAtCamera::rotate_side(float theta)
+void LookAtCamera::rotate_side(float delta)
 {
+	beta = beta + delta;
+	update_orientation();
+}
 
-	mat::Mat3 rot_matrix = transform::rotation_matrix_y_axis(theta);
-
-	vec::Vec3 point(0.0f, 0.0f, -distance);
-	vec::Vec3 new_camera_pos = rot_matrix * Vec3(0.0f, 0.0f, distance) + point;
-	vec::Vec3 new_up =  Vec3(0.0f, 1.0f, 0.0f);
-
-	//camera_matrix = transform::look_at_matrix(new_camera_pos, point, new_up) * camera_matrix;
-	update(transform::look_at_matrix(new_camera_pos, point, new_up));
-
+void LookAtCamera::rotate_up(float delta)
+{
+	alpha = alpha + delta;
+	update_orientation();
 }
 
 void LookAtCamera::walk(float step)
 {
-	vec::Vec3 point(0.0f, 0.0f, step - distance);
-	vec::Vec3 new_camera_pos(0.0f, 0.0f, -step);
-	vec::Vec3 new_up(0.0f, 1.0f, 0.0f);
-
-	distance = distance - step;
-
-	//camera_matrix = transform::look_at_matrix(new_camera_pos, point, new_up) * camera_matrix;
-	update(transform::look_at_matrix(new_camera_pos, point, new_up));
+	distance = distance + step;
+	update_orientation();
 }
 
-void LookAtCamera::update(const mat::Mat4 &transform)
-{
-	camera_matrix = transform * camera_matrix;
-
-	view_matrix = frustum->frustum_matrix * camera_matrix;
-}
 
 void LookAtCamera::update()
 {
 	view_matrix = frustum->frustum_matrix * camera_matrix;
 }
 
-void LookAtCamera::set_frustum(Frustum &f)
+void LookAtCamera::update_orientation()
 {
-	frustum = &f;
+	// Calculate rotation matrix from parameters (relative to the original orientation, 
+	// stored in camera_base_matrix
+	mat::Mat3 rotation_matrix = transform::rotation_matrix_x_axis(alpha) * transform::rotation_matrix_y_axis(beta) * transform::rotation_matrix_z_axis(gamma);
+	
+	const vec::Vec3 rotated_z_axis = rotation_matrix * vec::Vec3(0.0f, 0.0f, 1.0f);
+
+	// Camera position due to rotation = Rot * (0,0,initial dist.) - (0,0,initial dist)
+	vec::Vec3 camera_rotation =  initial_distance * rotated_z_axis  + vec::Vec3(0.0f, 0.0f, -initial_distance);
+
+	// Camera position due to translation
+	vec::Vec3 camera_translation = (distance - initial_distance) * rotated_z_axis;
+
+	// New up position
+	vec::Vec3 new_up = rotation_matrix * vec::Vec3(0.0f, 1.0f, 0.0f);
+
+	// Calculate the new camera matrix from the original camera_base_matrix
+	camera_matrix = transform::look_at_matrix(camera_rotation + camera_translation,  vec::Vec3(0.0f, 0.0f, -initial_distance), new_up) * initial_camera_matrix;
+
+	// Update the view matrix
 	update();
 }

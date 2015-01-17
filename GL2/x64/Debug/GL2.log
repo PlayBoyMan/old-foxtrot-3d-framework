@@ -1,9 +1,9 @@
-﻿Build started 16/01/2015 15:50:38.
+﻿Build started 17/01/2015 19:30:36.
      1>Project "C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\GL2\GL2.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Files\lib\glfw-3.0.4.bin.WIN64\include" /IC:\Files\include /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Temp\FreeCamera.cpp main.cpp
-         FreeCamera.cpp
-     1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\temp\..\framework\Foxtrot.h(15): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Files\lib\glfw-3.0.4.bin.WIN64\include" /IC:\Files\include /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Temp\LookAtCamera.cpp main.cpp
+         LookAtCamera.cpp
+     1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\temp\../framework/Foxtrot.h(15): warning C4305: 'initializing' : truncation from 'double' to 'const float'
          Generating Code...
          Compiling...
          main.cpp
@@ -32,4 +32,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:06.65
+Time Elapsed 00:00:02.50
