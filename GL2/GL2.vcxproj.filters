@@ -63,6 +63,12 @@
     <ClInclude Include="Temp\FreeCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Temp\Easing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temp\Tween.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -99,6 +105,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Temp\FreeCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\Easing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp\Tween.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

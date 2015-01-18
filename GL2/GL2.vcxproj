@@ -157,6 +157,7 @@
     <ClInclude Include="framework\Math\quaternion.h" />
     <ClInclude Include="framework\Math\transform.h" />
     <ClInclude Include="framework\Math\vector.h" />
+    <ClInclude Include="Temp\Easing.h" />
     <ClInclude Include="Temp\FreeCamera.h" />
     <ClInclude Include="Temp\Frustum.h" />
     <ClInclude Include="GLApp.h" />
@@ -167,12 +168,14 @@
     <ClInclude Include="Temp\LookAtCamera.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Temp\Tween.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="framework\Math\Matrix.cpp" />
     <ClCompile Include="framework\Math\Quaternion.cpp" />
     <ClCompile Include="framework\Math\Transform.cpp" />
     <ClCompile Include="framework\Math\Vector.cpp" />
+    <ClCompile Include="Temp\Easing.cpp" />
     <ClCompile Include="Temp\FreeCamera.cpp" />
     <ClCompile Include="Temp\Frustum.cpp" />
     <ClCompile Include="Temp\LookAtCamera.cpp" />
@@ -181,6 +184,7 @@
     <ClCompile Include="framework\Graphics\Mesh.cpp" />
     <ClCompile Include="framework\Graphics\Model.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Temp\Tween.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader.frag" />

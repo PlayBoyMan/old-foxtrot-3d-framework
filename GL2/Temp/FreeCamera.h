@@ -75,6 +75,7 @@ public:
 
 	/// Move the camera a 'step' in the camera's forward (-z) direction
 	void walk_side(float step);
+
 };
 
 

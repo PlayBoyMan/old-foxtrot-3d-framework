@@ -5,8 +5,10 @@
 #include "framework/Math/vector.h"
 #include "framework\Graphics\Mesh.h"
 #include "framework\Graphics\Model.h"
+
 #include "Temp\LookAtCamera.h"
 #include "Temp\FreeCamera.h"
+#include "Temp\Tween.h"
 
 #include <string>
 #include <math.h>
@@ -18,6 +20,7 @@
 using namespace framework;
 
 #pragma once
+#include "Temp\Easing.h"
 class GLApp : public GLAppBase
 {
 private:
@@ -42,6 +45,7 @@ private:
 
 	float time = 0.0f;
 
+	Tween myTween;
 
 	static void resize(GLFWwindow *window, int w, int h)
 	{
@@ -102,7 +106,7 @@ private:
 
 		free_camera = FreeCamera(Vec3(0.0, 10.0, 20.0f), Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
 
-
+		myTween = Tween({ 0.0f, 5.0f, 10.0f }, { 0.0f, 10.0f, 0.0f });
 
 	}
 	
@@ -113,8 +117,14 @@ private:
 		float delta = new_time - time;
 		time = new_time;
 
-		const float rotation_speed = 0.8f;
+		float rotation_speed = 0.8f;
 		const float walk_speed = 5.0f;
+		//printf("Tween: %f, %f, %d \n", myTween.ease_in(), glfwGetTime(), myTween.started);
+		printf("Linear: %f \n", linear_easing(glfwGetTime(), 20.0f, 100.0f, 0.0f));
+		
+		rotation_speed = myTween.ease_in();
+		printf("%f\n", rotation_speed);
+		camera.update_orientation();
 
 		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		{			

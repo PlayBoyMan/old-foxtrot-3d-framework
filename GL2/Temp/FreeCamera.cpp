@@ -98,3 +98,5 @@ void FreeCamera::update()
 	view_matrix = frustum->frustum_matrix * camera_matrix;
 }
 
+
+
