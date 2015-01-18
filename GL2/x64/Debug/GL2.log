@@ -1,17 +1,16 @@
-﻿Build started 18/01/2015 00:53:28.
+﻿Build started 18/01/2015 17:10:10.
      1>Project "C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\GL2\GL2.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Files\lib\glfw-3.0.4.bin.WIN64\include" /IC:\Files\include /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Temp\Tween.cpp main.cpp
          Tween.cpp
-     1>Temp\Tween.cpp(29): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>Temp\Tween.cpp(51): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
          Generating Code...
          Compiling...
          main.cpp
      1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\temp\../framework/Foxtrot.h(15): warning C4305: 'initializing' : truncation from 'double' to 'const float'
-     1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\GLApp.h(54): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\GLApp.h(56): warning C4244: 'argument' : conversion from 'double' to 'GLsizei', possible loss of data
-     1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\GLApp.h(60): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\GLApp.h(123): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\GLApp.h(58): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\GLApp.h(60): warning C4244: 'argument' : conversion from 'double' to 'GLsizei', possible loss of data
+     1>c:\files\doc\study\opengl\opengl superbible\ch3\gl2\GLApp.h(64): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\x64\Debug\GL2.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Files\lib\assimp\lib /LIBPATH:"C:\Files\lib\glew-1.11.0\lib\Release\x64" /LIBPATH:"C:\Files\lib\glfw-3.0.4.bin.WIN64\lib-msvc120" glew32.lib opengl32.lib glfw3.lib assimp.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\x64\Debug\GL2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Files\doc\study\OpenGL\OpenGL SuperBible\CH3\x64\Debug\GL2.lib" /MACHINE:X64 /PROFILE x64\Debug\Matrix.obj
@@ -35,4 +34,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.84
+Time Elapsed 00:00:01.73

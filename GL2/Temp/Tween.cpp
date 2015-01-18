@@ -9,9 +9,32 @@ Tween::Tween(const std::vector<float> &time, const std::vector<float> &point)
 	times = time;
 	points = point;
 	started = false;
+	
+	this->time = 0.0f;
+	variable = nullptr;
+}
+
+void Tween::attach_variable(float &var)
+{
+	variable = &var;
+}
+
+void Tween::release_variable()
+{
+	variable = nullptr;
+	rewind();
+}
+
+void Tween::rewind()
+{
+	started = false;
 	this->time = 0.0f;
 }
 
+void Tween::ease_in_variable()
+{
+	(*variable) = ease_in();
+}
 	
 float Tween::ease_in()
 {

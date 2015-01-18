@@ -45,7 +45,11 @@ private:
 
 	float time = 0.0f;
 
+	bool release = false;
+	bool press = false;
 	Tween myTween;
+
+	float rotation_speed = 0.0f;
 
 	static void resize(GLFWwindow *window, int w, int h)
 	{
@@ -106,7 +110,7 @@ private:
 
 		free_camera = FreeCamera(Vec3(0.0, 10.0, 20.0f), Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
 
-		myTween = Tween({ 0.0f, 5.0f, 10.0f }, { 0.0f, 10.0f, 0.0f });
+		myTween = Tween({ 0.0f, 1.0f}, { 1.0f, 0.0f });
 
 	}
 	
@@ -116,13 +120,14 @@ private:
 		float new_time = (float)glfwGetTime();
 		float delta = new_time - time;
 		time = new_time;
-
-		float rotation_speed = 0.8f;
+		float accel = 2.0f;
+		
 		const float walk_speed = 5.0f;
 		//printf("Tween: %f, %f, %d \n", myTween.ease_in(), glfwGetTime(), myTween.started);
-		printf("Linear: %f \n", linear_easing(glfwGetTime(), 20.0f, 100.0f, 0.0f));
+		//printf("Linear: %f \n", linear_easing(glfwGetTime(), 20.0f, 100.0f, 0.0f));
 		
-		rotation_speed = myTween.ease_in();
+		myTween.attach_variable(rotation_speed);
+		
 		printf("%f\n", rotation_speed);
 		camera.update_orientation();
 
@@ -140,9 +145,30 @@ private:
 
 		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		{
-			camera.rotate_side(rotation_speed * delta);
+			//if (abs(rotation_speed) < 2.0f)
+			//	rotation_speed += accel * delta;
+			// else
+			//	rotation_speed = 2.0f;
+			myTween.ease_in_variable();
 			free_camera.walk_side(walk_speed * delta);
+			press = true;
 		}
+		else
+		{
+			if (press == true)
+				press = false;
+		}
+
+		camera.rotate_side(rotation_speed * delta);
+
+		if (press == false)
+		{
+			if (abs(rotation_speed) < 0.001f)
+				press = true;
+			else 
+				rotation_speed -= accel * delta;
+		}
+
 
 		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		{
