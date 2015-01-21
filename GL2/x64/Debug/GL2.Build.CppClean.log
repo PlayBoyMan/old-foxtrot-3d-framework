@@ -1,31 +1,40 @@
-c:\users\dmbfm\documents\visual studio 2013\projects\gl2\gl2\x64\debug\vc120.pdb
-c:\users\dmbfm\documents\visual studio 2013\projects\gl2\gl2\x64\debug\vc120.idb
-c:\users\dmbfm\documents\visual studio 2013\projects\gl2\gl2\x64\debug\gl2.obj
-c:\users\dmbfm\documents\visual studio 2013\projects\gl2\gl2\x64\debug\stdafx.obj
-c:\users\dmbfm\documents\visual studio 2013\projects\gl2\gl2\x64\debug\shaders.obj
-c:\files\doc\study\opengl\gl2\gl2\x64\debug\vc120.pdb
-c:\files\doc\study\opengl\gl2\gl2\x64\debug\vc120.idb
-c:\files\doc\study\opengl\gl2\gl2\x64\debug\gl2.obj
-c:\files\doc\study\opengl\gl2\gl2\x64\debug\shaders.obj
-c:\files\doc\study\opengl\gl2\gl2\x64\debug\stdafx.obj
-c:\files\doc\study\opengl\gl2\gl2\x64\debug\glapp.obj
-c:\files\doc\study\opengl\gl2\gl2\x64\debug\main.obj
 c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\vc120.pdb
 c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\vc120.idb
-c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\main.obj
-c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\shaders.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\cameramanager.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\matrix.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\quaternion.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\transform.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\vector.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\easing.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\freecamera.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\frustum.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\lookatcamera.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\main.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\shaders.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\mesh.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\model.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\stdafx.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\tween.nativecodeanalysis.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\tween.obj
 c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\stdafx.obj
-c:\users\dmbfm\documents\visual studio 2013\projects\gl2\x64\debug\gl2.ilk
-c:\users\dmbfm\documents\visual studio 2013\projects\gl2\x64\debug\gl2.exe
-c:\users\dmbfm\documents\visual studio 2013\projects\gl2\x64\debug\gl2.pdb
-c:\files\doc\study\opengl\gl2\x64\debug\gl2.ilk
-c:\files\doc\study\opengl\gl2\x64\debug\gl2.exe
-c:\files\doc\study\opengl\gl2\x64\debug\gl2.pdb
-c:\files\doc\study\opengl\opengl superbible\ch3\x64\debug\gl2.ilk
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\model.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\mesh.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\shaders.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\main.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\lookatcamera.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\frustum.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\freecamera.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\easing.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\vector.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\transform.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\quaternion.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\matrix.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\cameramanager.obj
 c:\files\doc\study\opengl\opengl superbible\ch3\x64\debug\gl2.exe
 c:\files\doc\study\opengl\opengl superbible\ch3\x64\debug\gl2.pdb
-c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\gl2.obj
-c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\glapp.obj
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\nativecodeanalysis.read.1.tlog
+c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\vc.nativecodeanalysis.all.xml
+c:\files\doc\study\opengl\opengl superbible\ch3\x64\debug\gl2.exe.lastcodeanalysissucceeded
 c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\gl2.tlog\cl.command.1.tlog
 c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\gl2.tlog\cl.read.1.tlog
 c:\files\doc\study\opengl\opengl superbible\ch3\gl2\x64\debug\gl2.tlog\cl.write.1.tlog

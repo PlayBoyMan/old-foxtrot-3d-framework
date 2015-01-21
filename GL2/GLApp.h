@@ -9,6 +9,7 @@
 #include "Temp\LookAtCamera.h"
 #include "Temp\FreeCamera.h"
 #include "Temp\Tween.h"
+#include "Temp\CameraManager.h"
 
 #include <string>
 #include <math.h>
@@ -28,28 +29,15 @@ private:
 	ShaderProgram shaderProgram;
 
 	mat::Mat4 transform_matrix;
-	
-	graphics::Mesh test, t2, t3;
-
-	vec::Vec3 camera_pos, point_pos;
-
-	float angle = 0.0f;
 
 	graphics::Model model;
 
 	LookAtCamera camera;
-
-	FreeCamera free_camera;
-	
+	FreeCamera free_camera;	
 	Frustum myFrustum;
 
-	float time = 0.0f;
+	CameraManager camara_manager;
 
-	bool release = false;
-	bool press = false;
-	Tween myTween;
-
-	float rotation_speed = 0.0f;
 
 	static void resize(GLFWwindow *window, int w, int h)
 	{
@@ -67,35 +55,18 @@ private:
 		}
 	}
 
-	void init() 
-	{ 
+	void init()
+	{
 		setResizeCallback(resize);
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);		
-		
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 		shaderProgram.compileShader("shaders/shader.vert", GL_VERTEX_SHADER);
 		shaderProgram.compileShader("shaders/shader.frag", GL_FRAGMENT_SHADER);
-		shaderProgram.linkProgram();		
-
-		float triangle[] = { -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-			1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
-		
-		
-		test.add_vertex(3, triangle);
-		test.load();
-		
-		triangle[2] += 2.0f; triangle[10] += 2.0f; triangle[18] += 2.0f;
-
-		t2.add_vertex(3, triangle);
-		t2.load();
-
-		camera_pos = vec::Vec3(0.0f, 0.0f, 10.0f);
+		shaderProgram.linkProgram();
 
 		model.load_model("Resources\\Models\\nanosuit\\nanosuit.obj");
-		
-		
-		
+
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
@@ -107,124 +78,19 @@ private:
 
 		myFrustum = Frustum(1.0f, 1000.0f, 0.5f, -0.5f, 0.28f, -0.28f);
 		camera = LookAtCamera(Vec3(0.0, 10.0, 10.0f), Vec3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
-
 		free_camera = FreeCamera(Vec3(0.0, 10.0, 20.0f), Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
 
-		myTween = Tween({ 0.0f, 1.0f}, { 1.0f, 0.0f });
-
+		camara_manager = CameraManager(window, camera);
+		camara_manager.set_tweens();
 	}
+		
 	
-	void render()
+	void render(float delta)
 	{
-
-		float new_time = (float)glfwGetTime();
-		float delta = new_time - time;
-		time = new_time;
-		float accel = 2.0f;
-		
-		const float walk_speed = 5.0f;
-		//printf("Tween: %f, %f, %d \n", myTween.ease_in(), glfwGetTime(), myTween.started);
-		//printf("Linear: %f \n", linear_easing(glfwGetTime(), 20.0f, 100.0f, 0.0f));
-		
-		myTween.attach_variable(rotation_speed);
-		
-		printf("%f\n", rotation_speed);
-		camera.update_orientation();
-
-		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		{			
-			camera.rotate_up(0.005f);
-			free_camera.walk_forward(walk_speed * delta);
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		{
-			camera.rotate_up(-0.005f);
-			free_camera.walk_forward(-walk_speed * delta);
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		{
-			//if (abs(rotation_speed) < 2.0f)
-			//	rotation_speed += accel * delta;
-			// else
-			//	rotation_speed = 2.0f;
-			myTween.ease_in_variable();
-			free_camera.walk_side(walk_speed * delta);
-			press = true;
-		}
-		else
-		{
-			if (press == true)
-				press = false;
-		}
-
-		camera.rotate_side(rotation_speed * delta);
-
-		if (press == false)
-		{
-			if (abs(rotation_speed) < 0.001f)
-				press = true;
-			else 
-				rotation_speed -= accel * delta;
-		}
-
-
-		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		{
-			camera.rotate_side(-rotation_speed * delta);
-			free_camera.walk_side(-walk_speed * delta);
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		{
-			camera.walk(-walk_speed * delta);
-			free_camera.tilt(rotation_speed * delta);
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		{
-			camera.walk(walk_speed * delta);
-			free_camera.tilt(-rotation_speed * delta);
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-		{
-			camera.frustum->zoom(0.001f);
-			camera.update();
-			
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
-		{
-			camera.frustum->zoom(-0.001f);
-			camera.update();
-
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		{
-			free_camera.pan(rotation_speed * delta);
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		{
-			free_camera.pan(-rotation_speed * delta);
-		}
-
-		
+		camara_manager.input();
+		camara_manager.update(delta);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		point_pos = camera_pos + vec::Vec3(0.0f, 0.0f, -1.0f);
-		
-		
-
-		//transform_matrix = transform::frustum_matrix(1.0f, 100.0f, 1.0f, -1.0f, 0.7f, -0.7f)*transform::look_at_matrix(camera_pos, point_pos, vec::Vec3(0.0f, 1.0f, 0.0f));
-		
-		//transform_matrix = transform::frustum_matrix(1.0f, 1000.0f, 0.5f, -0.5f, 0.28, -0.28f) * camera.camera_matrix;
-
-		//transform_matrix = free_camera.view_matrix;
 
 		transform_matrix = camera.view_matrix;
 
@@ -233,12 +99,8 @@ private:
 
 		glUseProgram(shaderProgram.getProgram());
 
-		//test.render(); 
-		
-		//t2.render();		
-
 		model.render();
-		
+
 	}
 
 public:

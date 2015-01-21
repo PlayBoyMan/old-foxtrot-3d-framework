@@ -98,7 +98,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MinSpace</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\Files\lib\glfw-3.0.4.bin.WIN64\include;C:\Files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -152,6 +152,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Temp\CameraManager.h" />
     <ClInclude Include="framework\Foxtrot.h" />
     <ClInclude Include="framework\Math\matrix.h" />
     <ClInclude Include="framework\Math\quaternion.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Temp\Tween.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Temp\CameraManager.cpp" />
     <ClCompile Include="framework\Math\Matrix.cpp" />
     <ClCompile Include="framework\Math\Quaternion.cpp" />
     <ClCompile Include="framework\Math\Transform.cpp" />

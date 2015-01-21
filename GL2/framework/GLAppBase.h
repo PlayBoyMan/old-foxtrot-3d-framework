@@ -38,6 +38,9 @@ public:
 	/// Output info to terminal?
 	bool verbose = true;
 	
+	/// Latest updated time
+	float current_time;
+
 	/// Print message on terminal
 	inline void log(const string &str)
 	{
@@ -89,8 +92,8 @@ public:
 		log("_init() end");
 	}
 
-	/// Default render, to be overriden by the user.
-	virtual void render()
+	/// Default render, to be overridden by the user.
+	virtual void render(float delta)
 	{
 		log("GLAppBase render()");
 		glClearColor(0.0f, 0.3f, 0.21f, 1.0f);
@@ -102,10 +105,18 @@ public:
 	{	
 		log("GLAppBase mainLoop()");		
 
+		current_time = (float) glfwGetTime();
+
 		while (!glfwWindowShouldClose(window))
 		{
-			render();
+			// Get the time between frames
+			const float delta = (float) glfwGetTime() - current_time;
+			current_time += delta;
 
+			// call the render function			
+			render(delta);
+
+			// swap buffers and buffer events
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 		}	
