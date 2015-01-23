@@ -7,6 +7,7 @@ layout (location = 2) in vec2 tex_coords;
 uniform mat4 transform_matrix;
 
 out vec3 fs_color;
+out vec2 texture_coordinate;
 
 void main ()
 {	
@@ -20,4 +21,6 @@ void main ()
 	gl_Position = transform_matrix * vec4(position, 1.0f);
 	
 	fs_color = normals;
+
+	texture_coordinate = tex_coords;
 }

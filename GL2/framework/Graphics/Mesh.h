@@ -49,7 +49,7 @@ namespace framework {
 		{
 		private:
 			bool element_render = false;
-
+	
 		public:
 
 			/// Vector of vertex objects, holding vertex data.

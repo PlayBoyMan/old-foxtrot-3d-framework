@@ -107,8 +107,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Files\lib\assimp\lib;C:\Files\lib\glew-1.11.0\lib\Release\x64;C:\Files\lib\glfw-3.0.4.bin.WIN64\lib-msvc120;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3.lib;assimp.lib;DevIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Files\lib\assimp\lib;C:\Files\lib\glew-1.11.0\lib\Release\x64;C:\Files\lib\glfw-3.0.4.bin.WIN64\lib-msvc120;C:\Files\lib\DevIL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
@@ -170,6 +170,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Temp\Tween.h" />
+    <ClInclude Include="framework\Graphics\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Temp\CameraManager.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="framework\Graphics\Model.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Temp\Tween.cpp" />
+    <ClCompile Include="framework\Graphics\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader.frag" />

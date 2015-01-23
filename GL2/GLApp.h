@@ -16,7 +16,7 @@
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 #include <glm\glm.hpp>
-#include <gli\gli.hpp>
+#include <IL/il.h>
 
 using namespace framework;
 
@@ -33,8 +33,10 @@ private:
 	graphics::Model model;
 
 	LookAtCamera camera;
-	FreeCamera free_camera;	
 	Frustum myFrustum;
+
+	Mesh quad;
+	GLuint texture_id;
 
 	CameraManager camara_manager;
 
@@ -55,6 +57,67 @@ private:
 		}
 	}
 
+	void load_models()
+	{
+		const float p1[8] = { -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f };
+		const float p2[8] = { -1.0f,  1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f };
+		const float p3[8] = {  1.0f,  1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f };
+		const float p4[8] = {  1.0f,  -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f };
+
+		quad.add_vertex(p1);
+		quad.add_vertex(p2);
+		quad.add_vertex(p3);
+		quad.add_vertex(p4);
+
+		quad.indices = vector<GLuint> {0, 3, 1, 3, 2, 1};
+
+		quad.load();
+
+		// texture code
+
+		GLuint image_id;
+
+		ilInit();
+		ilClearColour(255, 255, 255, 000);
+
+
+		ilGenImages(1, &image_id);
+
+		ilBindImage(image_id);
+
+		ilEnable(IL_ORIGIN_SET);
+
+		ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+		
+		if (!ilLoadImage((ILstring) "Resources\\Images\\stone_wall.jpg"))
+		{
+			error("Error loading image");
+			exit(-1);
+		}
+
+		ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+
+		glGenTextures(1, &texture_id);
+		glBindTexture(GL_TEXTURE_2D, texture_id);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// Set texture wrapping to GL_REPEAT (usually basic wrapping method)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// Set texture filtering
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 2.0);
+
+
+		printf("(%d, %d)\n", ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT));
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		ilBindImage(0);
+
+
+	}
+
 	void init()
 	{
 		setResizeCallback(resize);
@@ -65,23 +128,26 @@ private:
 		shaderProgram.compileShader("shaders/shader.frag", GL_FRAGMENT_SHADER);
 		shaderProgram.linkProgram();
 
-		model.load_model("Resources\\Models\\nanosuit\\nanosuit.obj");
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_BACK);
+		//glFrontFace(GL_CCW);
 
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-		glFrontFace(GL_CCW);
-
+		
+		
 		glEnable(GL_DEPTH_TEST);
 		glDepthMask(GL_TRUE);
 		glDepthFunc(GL_LEQUAL);
 		glDepthRange(0.0f, 1.0f);
 
 		myFrustum = Frustum(1.0f, 1000.0f, 0.5f, -0.5f, 0.28f, -0.28f);
-		camera = LookAtCamera(Vec3(0.0, 10.0, 10.0f), Vec3(0.0f, 10.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
-		free_camera = FreeCamera(Vec3(0.0, 10.0, 20.0f), Vec3(0.0f, 0.0f, -1.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
+		camera = LookAtCamera(Vec3(0.0, 0.0, 5.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f), myFrustum);
 
 		camara_manager = CameraManager(window, camera);
 		camara_manager.set_tweens();
+
+		load_models();
+
+
 	}
 		
 	
@@ -99,8 +165,8 @@ private:
 
 		glUseProgram(shaderProgram.getProgram());
 
-		model.render();
-
+		glBindTexture(GL_TEXTURE_2D, texture_id);
+		quad.render();
 	}
 
 public:
